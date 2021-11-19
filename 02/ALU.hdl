@@ -43,4 +43,12 @@ CHIP ALU {
 
     PARTS:
    // Put you code here:
+   // First part of truth table
+   Mux16(a=x, b[0..15]=false, sel=zx, out=muxXout); //zero the X
+   Not16(in=muxXout, out=notX);                     //not the X
+   Mux16(a=muxXout, b=notX, sel=nx, out=muxX2out);  //X Or not X
+   // Do the same for Y
+   Mux16(a=y, b[0..15]=false, sel=zy, out=muxYout); //zero the Y
+   Not16(in=muxYout, out=notY);                     //not the Y
+   Mux16(a=muxYout, b=notY, sel=ny, out=muxY2out);  //Y or not Y
 }
