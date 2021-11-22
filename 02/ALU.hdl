@@ -43,25 +43,29 @@ CHIP ALU {
 
     PARTS:
    // Put you code here:
-   // First part of truth table
-   Mux16(a=x, b[0..15]=false, sel=zx, out=x1); //zero the X
-   Not16(in=x1, out=notX);                     //not the X
-   Mux16(a=x1, b=notX, sel=nx, out=x2);  //X Or not X
-   // Do the same for Y
-   Mux16(a=y, b[0..15]=false, sel=zy, out=y1); //zero the Y
-   Not16(in=y1, out=notY);                     //not the Y
-   Mux16(a=y1, b=notY, sel=ny, out=y2);  //Y or not Y
    
-   Add16(a=x2, b=y2, out=XplusY);       //X + Y
-   And16(a=x2, b=y2, out=XandY);        //X & Y
-   Mux16(a=XandY, b=XplusY, sel=ch, out=result);    //Chooses one
+   // First part of truth table
+   Mux16(a=x, b[0..15]=false, sel=zx, out=x1);      //zero the X
+   Not16(in=x1, out=notX);                          //not the X
+   Mux16(a=x1, b=notX, sel=nx, out=x2);             //X Or not X
+   // Do the same for Y
+   Mux16(a=y, b[0..15]=false, sel=zy, out=y1);      //zero the Y
+   Not16(in=y1, out=notY);                          //not the Y
+   Mux16(a=y1, b=notY, sel=ny, out=y2);             //Y or not Y
+   
 
-   Not16(in=result, out=negatedResult);             //Reverses output
+   Add16(a=x2, b=y2, out=XplusY);                   //X + Y
+   And16(a=x2, b=y2, out=XandY);                    //X & Y
+   Mux16(a=XandY, b=XplusY, sel=f, out=result);    //Chooses one
+
+
+   Not16(in=result, out=negatedResult);             
    Mux16(a=result, b=negatedResult, sel=no, out=out,
                                             out[15]=ng, 
                                             out[0..7]=finalLeft, 
                                             out[8..15]=finalRight); 
    
+
    //out == 0 (zr)
    Or8Way(in=finalLeft, out=zrLeft);
    Or8Way(in=finalRight, out=zrRight);
