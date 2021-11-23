@@ -63,7 +63,7 @@ CHIP ALU {
    Mux16(a=result, b=negatedResult, sel=no, out=out,
                                             out[15]=ng, 
                                             out[0..7]=finalLeft, 
-                                            out[8..15]=finalRight); 
+                                            out[8..15]=finalRight);
    
 
    //out == 0 (zr)
